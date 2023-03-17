@@ -6,7 +6,6 @@ import numpy as np
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 
-
 from src.exceptional import CustomException
 
 def save_object(file_path,obj):
@@ -36,8 +35,6 @@ def evaluate_models(X_train,y_train,X_test,y_test,models,param):
             model.fit(X_train,y_train)
             # model.fit(X_train,y_train) #train model
 
-            
-
             y_train_pred = model.predict(X_train)
             y_test_pred = model.predict(X_test)
 
@@ -48,6 +45,15 @@ def evaluate_models(X_train,y_train,X_test,y_test,models,param):
 
         return report
     
+    except Exception as e:
+        raise CustomException(e,sys)
+    
+def load_object(file_path):
+    try:
+        with open(file_path,"rb") as file_obj:
+            obj = dill.load(file_obj)
+            return obj
+        
     except Exception as e:
         raise CustomException(e,sys)
     
